@@ -1,11 +1,10 @@
-from dependency.redisConn import redis_conn
 from datetime import datetime
+from dependency import redis_conn
 
-def set_value(key: str):
-  value = datetime.today().isoformat()
+def set_value(key: str, value: str):
   redis_conn.set(key, value)
 
-  return (key, value)
+  return f'{key}, {value}'
 
 def get_value(key: str):
   value = redis_conn.get(key)
@@ -17,8 +16,14 @@ def get_all_values():
 
   all_values = {}
   for key in all_keys:
+      temp = key.decode('ascii').split(":")
+
+      if len(temp) > 1:
+        continue
+
       value = redis_conn.get(key)
-      all_values[key.decode('utf-8')] = value.decode('utf-8') if value else None
+
+      all_values[key] = value.decode('utf-8') if value else None
 
   return all_values
 

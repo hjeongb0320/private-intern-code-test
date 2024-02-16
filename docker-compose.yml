@@ -22,8 +22,18 @@ services:
     working_dir: /home/myproj
     volumes:
       - ./:/home/myproj
-    # links:
-    #     - myproj_redis
-    depends_on:
+    links:
       - test_redis
     command: uvicorn api:app --host 0.0.0.0 --port 5057 --reload
+
+  rq_worker:
+    container_name: my_worker
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    working_dir: /home/myproj
+    volumes:
+      - ./:/home/myproj
+    links:
+      - test_redis
+    command: rq worker --url redis://test_redis:6379 my_queue
