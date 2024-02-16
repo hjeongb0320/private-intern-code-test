@@ -1,16 +1,11 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException
 from pydantic import BaseModel
 from redis import Redis
 from rq import Queue
+import redisController
 
-from worker import runTask
+# from worker import runTask
 
 app = FastAPI()
 
-redis_conn = Redis(host='test_redis', port=6379)
-q = Queue('my_queue', connection=redis_conn)
-
-@app.get('/hello')
-def hello():
-    """Test endpoint"""
-    return {'hello': 'world'}
+app.include_router(redisController.router, prefix="/redis", tags = ["redis"])
