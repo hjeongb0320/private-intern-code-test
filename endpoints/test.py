@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-import redisCrud
+import crud.redisCrud as redisCrud
 
 router = APIRouter()
 

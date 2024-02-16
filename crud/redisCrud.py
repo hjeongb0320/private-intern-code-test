@@ -1,4 +1,4 @@
-from redisConn import redis_conn
+from dependency.redisConn import redis_conn
 from datetime import datetime
 
 def set_value(key: str):
