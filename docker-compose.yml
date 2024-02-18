@@ -36,4 +36,28 @@ services:
       - ./:/home/myproj
     links:
       - test_redis
-    command: rq worker --url redis://test_redis:6379 my_queue
+    command: rq worker --with-scheduler --url redis://test_redis:6379 my_queue
+
+  # rq_worker_2:
+  #   container_name: my_worker_2
+  #   build:
+  #     context: ./
+  #     dockerfile: ./Dockerfile
+  #   working_dir: /home/myproj
+  #   volumes:
+  #     - ./:/home/myproj
+  #   links:
+  #     - test_redis
+  #   command: rq worker --with-scheduler --url redis://test_redis:6379 my_queue
+
+  # rq_worker_3:
+  #   container_name: my_worker_3
+  #   build:
+  #     context: ./
+  #     dockerfile: ./Dockerfile
+  #   working_dir: /home/myproj
+  #   volumes:
+  #     - ./:/home/myproj
+  #   links:
+  #     - test_redis
+  #   command: rq worker --with-scheduler --url redis://test_redis:6379 my_queue
