@@ -17,7 +17,7 @@ async def gen_values():
         # result = q.enqueue(runTask, nowUuid, waitingTime, ttl=10)
         async_results.append(result)
 
-    done = False
+    # done = False
 
     # while not done:
     #     done = True
@@ -32,6 +32,24 @@ async def gen_values():
 
 def get_len():
     data = redisCrud.get_len()
+
+    ret = data
+
+    return ret
+
+def delete_random_values():
+    # 1. 몇개를 지울 것인지 랜덤으로 숫자 하나를 뽑는다
+    # 2. 가지고 있는 keys를 모두 가져온다
+    # 3. 우선 keys의 개수가 random_number보다 적지는 않은지 체크 -> 적다면 keys 개수만큼 삭제 (해당 함수의 실패를 없애기 위함 (어지간하면 유저의 행위를 막지 않기 위해))
+    # 4. 전체 keys 중 랜덤 숫자만큼 랜덤으로 key를 뽑음
+    # 5. 랜덤 숫자만큼 for문 돌며 key delete
+    # 6. 지운 개수 return
+
+    # 1
+    random_number = random.randint(0, 10)
+
+    # 2 3 4 5 6
+    data = redisCrud.delete_random_values(random_number)
 
     ret = data
 

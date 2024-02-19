@@ -1,4 +1,5 @@
 from dependency import redis_conn
+import random
 
 def set_value(key: str, value: str):
   redis_conn.set(key, value)
@@ -39,6 +40,28 @@ def delete_value(key: str):
   deleted_count = redis_conn.delete(key)
 
   return deleted_count
+
+def delete_random_values(random_number: int):
+  # 2
+  all_values = get_all_values()
+
+  # 3
+  total_values = len(all_values)
+  if total_values < random_number:
+    random_number = total_values
+
+  # 4
+  keys = list(all_values.keys())
+  random_keys = random.sample(keys, random_number)
+
+  ret = 0
+
+  # 5
+  for key in random_keys:
+    ret += delete_value(key)
+
+  # 6
+  return ret
 
 def delete_all_values():
   redis_conn.flushdb()
