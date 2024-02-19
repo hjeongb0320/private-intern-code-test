@@ -1,12 +1,14 @@
 from crud import redisCrud
-from datetime import datetime
-import asyncio
-import time
+from datetime import datetime, timedelta
 
 def runTask(uuid: str):
     # time.sleep(waitingTime)
 
-    value = datetime.today().isoformat()
+    current_time_utc = datetime.utcnow()
+    korea_timezone_offset = timedelta(hours=9)
+    current_time_korea = current_time_utc + korea_timezone_offset
+
+    value = current_time_korea.isoformat()
     
     ret = redisCrud.set_value(uuid, value)
 
