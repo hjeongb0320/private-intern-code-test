@@ -55,3 +55,9 @@ def delete_random_values():
 
     return ret
     
+def get_cnt(count: int):
+    data = redisCrud.get_cnt(count)
+
+    ret = data
+
+    return ret

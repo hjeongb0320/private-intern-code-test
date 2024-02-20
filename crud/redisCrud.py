@@ -11,6 +11,29 @@ def get_value(key: str):
 
   return value
 
+def get_random_keys(count: int):
+  all_values = get_all_values()
+
+  total_values = len(all_values)
+  if total_values < count:
+    count = total_values
+
+  keys = list(all_values.keys())
+  random_keys = random.sample(keys, count)
+
+  return random_keys
+
+def get_cnt(count: int):
+  random_keys = get_random_keys(count)
+
+  ret = {}
+
+  for key in random_keys:
+    value = get_value(key)
+    ret[key] = value
+
+  return ret
+
 def get_all_values():
   all_keys = redis_conn.keys()
 
@@ -42,17 +65,8 @@ def delete_value(key: str):
   return deleted_count
 
 def delete_random_values(random_number: int):
-  # 2
-  all_values = get_all_values()
-
-  # 3
-  total_values = len(all_values)
-  if total_values < random_number:
-    random_number = total_values
-
-  # 4
-  keys = list(all_values.keys())
-  random_keys = random.sample(keys, random_number)
+  # 2 3 4
+  random_keys = get_random_keys(random_number)
 
   ret = 0
 

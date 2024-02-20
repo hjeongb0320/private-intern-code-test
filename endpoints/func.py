@@ -33,3 +33,8 @@ def get_total():
 @router.get('/{count}')
 def get_cnt(count: int):
     """redis에 저장된 객체를 입력한 값 수 만큼 리턴하는 함수"""
+
+    data = funcCrud.get_cnt(count)
+    ret = data
+
+    return ret
