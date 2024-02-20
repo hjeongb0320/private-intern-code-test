@@ -13,7 +13,7 @@ async def gen_values():
         waitingTime = random.uniform(0, 9.8)
         # waitingTime = random.uniform(0, 1.1)
 
-        result = q.enqueue_in(timedelta(seconds=waitingTime), runTask, nowUuid)
+        result = q.enqueue_in(timedelta(seconds=waitingTime), runTask, nowUuid, result_ttl=0)
         # result = q.enqueue(runTask, nowUuid, waitingTime, ttl=10)
         async_results.append(result)
 
@@ -56,6 +56,10 @@ def delete_random_values():
     return ret
     
 def get_cnt(count: int):
+    # 1. 가지고 있는 keys를 모두 가져온다
+    # 2. 우선 keys의 개수가 count보다 적지는 않은지 체크 -> 적다면 keys 개수만큼 가져오기 (해당 함수의 실패를 없애기 위함 (어지간하면 유저의 행위를 막지 않기 위해))
+    # 3. 전체 keys 중 count 만큼 랜덤으로 key를 뽑음
+    # 4. key - value 쌍 dictionary return
     data = redisCrud.get_cnt(count)
 
     ret = data

@@ -38,9 +38,11 @@ def get_all_values():
   all_keys = redis_conn.keys()
 
   # RQ 관련 작업 및 상태를 추적하는 key 제외하고 진짜 value를 찾기 위함
+  # result_ttl을 활용하여 keys() 함수로 불러오는 인자를 최소화
   all_values = {}
   for key in all_keys:
       temp = key.decode('ascii').split(":")
+      print(temp)
 
       if len(temp) > 1:
         continue
