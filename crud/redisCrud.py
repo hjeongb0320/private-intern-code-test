@@ -23,7 +23,7 @@ def get_random_keys(count: int):
 
   return random_keys
 
-def get_cnt(count: int):
+def get_values(count: int):
   random_keys = get_random_keys(count)
 
   ret = {}
@@ -42,7 +42,6 @@ def get_all_values():
   all_values = {}
   for key in all_keys:
       temp = key.decode('ascii').split(":")
-      print(temp)
 
       if len(temp) > 1:
         continue
@@ -66,7 +65,7 @@ def delete_value(key: str):
 
   return deleted_count
 
-def delete_random_values(random_number: int):
+def delete_values(random_number: int):
   # 2 3 4
   random_keys = get_random_keys(random_number)
 
