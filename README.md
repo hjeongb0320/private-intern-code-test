@@ -33,6 +33,13 @@ docker compose 에 관해서도 이번에 처음 경험을 해보았는데, 너�
 
 추가적으로, docker compose라는 것을 통해서 container 끼리 소통하는 모습을 보기도 했고, 최근에 졸업 프로젝트를 MSA 관련 주제로 잡고 공부를 시작하는 과정에 있기도 해서 잠깐 상상을 해보았는데, 내가 최근에 만든 traB 어플의 서버에도 이를 충분히 적용할 수 있을 것이라는 판단이 섰다. 지금은 main server와 sub server가 따로 존재하는 상황이고, 이를 따로 분리했던 이유는 CI/CD 파이프라인 중 docker image생성이 너무 오래걸리기 때문이었다. node 기반으로 만들어진 이미지에 python 관련 dependency를 추가하려면 (특히 pytorch 관련) 대략 25분 이상이 걸려야 한 번의 CI/CD가 완료가 되었다. 그런데 이럴거면 서버와 서버를 분리해서 두개의 instance를 사용하는 것은 너무나 큰 리소스 낭비 같았다. 그리고 어쨌든 rest api로 통신을 해야하는 과정이 하나 추가되는 것이기 때문에 이것으로 인한 시간 지연도 발생할 것으로 우려 되었다. 우리의 메인서버가 고사양의 일을 필요로 하는 것도 아니기에, 하나의 인스턴스에 합쳐서 만들 수 있을 것 같았다 (사실 원래도 그래서 하나의 인스턴스에 진행하려 했었다.) 그리고 마침 우리의 서버는 container 기반으로 배포가 되고 있으니까, container를 하나 더 만들어서 컨테이너끼리 통신하게 하면 되겠다 라고 판단이 섰다. 그래서 이를 docker compose로 로컬에서 한 번 실험을 해보았다.
 
+<img src="https://cdn.discordapp.com/attachments/1156230299202625608/1209922350930464829/2024-02-22_2.49.37.png?ex=65e8aeff&is=65d639ff&hm=c994b20ce1558000401babe643d5db35c95453ddb37d54f002d3242325a91313&" width="350"/>
+<img src="https://cdn.discordapp.com/attachments/1156230299202625608/1209922335491100743/2024-02-22_2.49.20.png?ex=65e8aefc&is=65d639fc&hm=3f09600033b1900a90e3cf639c29b3b0bd2c02b9f72b484d98a9c9f0f8449d4f&" width="350"/>
+<img src="https://cdn.discordapp.com/attachments/1156230299202625608/1209922316541366344/2024-02-22_2.48.26.png?ex=65e8aef7&is=65d639f7&hm=8c27637d3715050d3a2e99fb2046acb880c5459c54f41182e13d4a0588fa3db6&" width="350"/>
+<img src="https://cdn.discordapp.com/attachments/1156230299202625608/1209922301986865213/2024-02-22_2.48.11.png?ex=65e8aef4&is=65d639f4&hm=582b4c6812116a40068e50303791aed2f8224779d1b32b7b2b3bd87d29ff9ed3&" width="350"/>
+
+우선 dockerfile을 적절히 만들어서 YOLO V5 모델을 제공하는 fast api 서버를 만들어서 미리 이미지로 내 로컬 도커에 넣어두었다. 그리고 traB 메인서버는 원래 사용하던 dockerfile을 이용하고 docker compose 명령어로 build 하도록 했다. 그리고 서버 내부에서 axios로 호출하는 부분도 내부에서 연결하는 dns를 이용해서 하도록 변경했다. 어려운 과정은 아니었지만, 공부해서 적용해보았다는 점에서 스스로 조금 뿌듯했다.
+
 ### Redis / Redis Queue
 
 #### 도입
