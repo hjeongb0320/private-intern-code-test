@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from crud import funcCrud
+from crud import funcCrud, redisCrud
 
 router = APIRouter()
 
@@ -24,17 +24,17 @@ def delete_random_values():
 def get_total():
     """redis에 저장된 객체가 몇 개인지 리턴하는 함수"""
 
-    data = funcCrud.get_len()
+    data = redisCrud.get_len()
     ret = data
 
     return ret
     
 
 @router.get('/{count}')
-def get_cnt(count: int):
+def get_values(count: int):
     """redis에 저장된 객체를 입력한 값 수 만큼 리턴하는 함수"""
 
-    data = funcCrud.get_cnt(count)
+    data = redisCrud.get_values(count)
     ret = data
 
     return ret

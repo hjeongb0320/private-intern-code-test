@@ -30,13 +30,6 @@ async def gen_values():
 
     return async_results
 
-def get_len():
-    data = redisCrud.get_len()
-
-    ret = data
-
-    return ret
-
 def delete_random_values():
     # 1. 몇개를 지울 것인지 랜덤으로 숫자 하나를 뽑는다
     # 2. 가지고 있는 keys를 모두 가져온다
@@ -49,18 +42,7 @@ def delete_random_values():
     random_number = random.randint(0, 10)
 
     # 2 3 4 5 6
-    data = redisCrud.delete_random_values(random_number)
-
-    ret = data
-
-    return ret
-    
-def get_cnt(count: int):
-    # 1. 가지고 있는 keys를 모두 가져온다
-    # 2. 우선 keys의 개수가 count보다 적지는 않은지 체크 -> 적다면 keys 개수만큼 가져오기 (해당 함수의 실패를 없애기 위함 (어지간하면 유저의 행위를 막지 않기 위해))
-    # 3. 전체 keys 중 count 만큼 랜덤으로 key를 뽑음
-    # 4. key - value 쌍 dictionary return
-    data = redisCrud.get_cnt(count)
+    data = redisCrud.delete_values(random_number)
 
     ret = data
 
