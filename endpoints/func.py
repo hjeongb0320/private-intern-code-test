@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from crud import funcCrud, redisCrud
 
 router = APIRouter()

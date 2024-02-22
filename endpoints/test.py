@@ -48,7 +48,6 @@ def delete_key(key: str):
     """Redis에서 주어진 키에 해당하는 쌍을 삭제하는 엔드포인트"""
 
     data = redisCrud.delete_value(key)
-    print(data)
 
     if data != 1:
         raise HTTPException(status_code=404, detail=f"키 '{key}'에 해당하는 값이 없습니다.")
