@@ -1,16 +1,13 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-from redis import Redis
-from rq import Queue
+from fastapi import FastAPI
+from endpoints import test, func
 
-from worker import runTask
+app = FastAPI(
+    title="Intern-Code-Test",
+    description="API description",
+    version="0.1.0",
+    docs_url="/docs",
+)
 
-app = FastAPI()
-
-redis_conn = Redis(host='test_redis', port=6379)
-q = Queue('my_queue', connection=redis_conn)
-
-@app.get('/hello')
-def hello():
-    """Test endpoint"""
-    return {'hello': 'world'}
+app.include_router(test.router, prefix="/test", tags = ["test"])
+app.include_router(func.router, prefix="/func", tags = ["func"])
+  
