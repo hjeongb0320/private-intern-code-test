@@ -3,7 +3,7 @@ import crud.redisCrud as redisCrud
 
 router = APIRouter()
 
-@router.post('/{key}')
+@router.post('')
 def set_value(key: str):
     """Redis에 키-값 쌍을 설정하는 엔드포인트"""
 
@@ -30,7 +30,7 @@ def delete_all_values():
 
     return ret
 
-@router.get('/{key}')
+@router.get('')
 def get_value(key: str):
     """Redis에서 키에 해당하는 값을 가져오는 엔드포인트"""
 
@@ -43,7 +43,7 @@ def get_value(key: str):
     
     return ret
 
-@router.delete('/{key}')
+@router.delete('')
 def delete_key(key: str):
     """Redis에서 주어진 키에 해당하는 쌍을 삭제하는 엔드포인트"""
 

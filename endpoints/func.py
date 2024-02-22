@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from crud import funcCrud, redisCrud
+from response import ResponseRedisDataList, ResponseCount
 
 router = APIRouter()
 
@@ -11,30 +12,30 @@ async def gen_values():
 
     return None
 
-@router.delete('/random')
+@router.delete('/random', response_model=ResponseCount)
 def delete_random_values():
     """redis에 저장된 객체를 0~10개 사이로 랜덤하게 삭제하는 함수"""
 
     data = funcCrud.delete_random_values()
-    ret = data
+    ret = {"count": data}
     
     return ret
 
-@router.get('/total')
+@router.get('/total', response_model=ResponseCount)
 def get_total():
     """redis에 저장된 객체가 몇 개인지 리턴하는 함수"""
 
     data = redisCrud.get_len()
-    ret = data
+    ret = {"count": data}
 
     return ret
     
 
-@router.get('/{count}')
+@router.get('', response_model=ResponseRedisDataList)
 def get_values(count: int):
     """redis에 저장된 객체를 입력한 값 수 만큼 리턴하는 함수"""
 
     data = redisCrud.get_values(count)
-    ret = data
+    ret = {"data": data}
 
     return ret
